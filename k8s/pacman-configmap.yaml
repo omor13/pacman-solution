@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pacman-config
+data:
+  MONGO_SERVICE_HOST: "mongo"
+  MONGO_DATABASE: "pacman"
+  MY_MONGO_PORT: "27017"
+  MONGO_USE_SSL: "false"
+  MONGO_VALIDATE_SSL: "false"
+  MONGO_URL: "mongodb://mongo:27017/pacman"
