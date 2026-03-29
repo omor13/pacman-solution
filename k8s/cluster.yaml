@@ -10,6 +10,7 @@ iam:
   withOIDC: true
 
 vpc:
+  cidr: 10.0.0.0/16
   clusterEndpoints:
     publicAccess: true
     privateAccess: false
