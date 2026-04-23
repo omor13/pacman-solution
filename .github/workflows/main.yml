@@ -32,3 +32,29 @@ jobs:
         cd docker
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    
+    - name: Deploy to EKS
+      env:
+        EKS_REGION: us-east-2
+        CLUSTER_NAME: PacmanCluster
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: |
+        aws eks update-kubeconfig --region $EKS_REGION --name $CLUSTER_NAME
+        cd k8s
+        kubectl apply -f storage-class.yaml
+        kubectl apply -f mongo-sts.yaml
+        kubectl apply -f mongo-service.yaml
+        kubectl apply -f pacman-configmap.yaml
+        kubectl apply -f pacman-deployment.yaml
+        kubectl apply -f pacman-service.yaml
+        kubectl set image deployment/pacman-deployment pacman=$REGISTRY:${{ github.sha }}
+        kubectl rollout status deployment/pacman-deployment
+
+    - name: Verify rollout
+      run: |
+        kubectl get pods
+        kubectl get svc
+
+        
+        
+        
