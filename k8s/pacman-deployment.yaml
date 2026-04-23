@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: pacman
-        image:  public.ecr.aws/k5u0o7b3/fadi/pacman:latest
+        image:  416338226474.dkr.ecr.us-east-2.amazonaws.com/myapps/pacman:7a2c186984efc582ba31da5612d7c01a2774edf9
         ports:
         - containerPort: 8080
         envFrom:
