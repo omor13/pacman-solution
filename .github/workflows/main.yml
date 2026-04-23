@@ -24,7 +24,7 @@ jobs:
         role-session-name: github-actions-eks
         
     - name: Verify AWS identity
-        run: aws sts get-caller-identity
+      run: aws sts get-caller-identity
         
     - name: Login to Amazon ECR
       id: login-ecr
