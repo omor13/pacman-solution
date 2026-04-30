@@ -45,6 +45,7 @@ jobs:
         EKS_REGION: us-east-2
         CLUSTER_NAME: PacmanCluster
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: myapps/pacman
       run: |
         aws eks update-kubeconfig --region $EKS_REGION --name $CLUSTER_NAME
         cd k8s
@@ -54,7 +55,7 @@ jobs:
         kubectl apply -f pacman-configmap.yaml
         kubectl apply -f pacman-deployment.yaml
         kubectl apply -f pacman-service.yaml
-        kubectl set image deployment/pacman-deployment pacman=$REGISTRY:${{ github.sha }}
+        kubectl set image deployment/pacman-deployment pacman=$REGISTRY/$REPOSITORY:${{ github.sha }}
         kubectl rollout status deployment/pacman-deployment
 
     - name: Verify rollout
